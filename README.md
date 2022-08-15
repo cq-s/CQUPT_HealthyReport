@@ -27,7 +27,7 @@
 1.登录自己的GitHub账号后点击右上角的`Star`,然后点击右上角的头像选择 `Your repositories`
 
 ---
-![](png/1.png)
+![]([png/1.png](https://raw.githubusercontent.com/cq-s/CQUPT_HealthyReport/main/png/1.png))
 
 ---
 2.在打开的`Repositories`页面点击`NEW`,然后在`Repository name`中填写`sign`(可随意填写)，下方选择`Private`然后点击最下方的`Create repository`
