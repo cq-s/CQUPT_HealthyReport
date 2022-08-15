@@ -21,8 +21,41 @@
 特别注意：(由于 Github Actions 的校时有误差,在设定时间的前后半小时均为正常现象)。
 
 ### 使用方式
-#### 方式一(本地或服务器运行)
+#### 方式一
+> (使用Github Actions)
+---
+1.登录自己的GitHub账号后点击右上角的`Star`,然后点击右上角的头像选择 `Your repositories`
 
+---
+![](png/1.png)
+
+---
+2.在打开的`Repositories`页面点击`NEW`,然后在`Repository name`中填写`sign`(可随意填写)，下方选择`Private`然后点击最下方的`Create repository`
+
+---
+![](png/2.png)
+
+---
+3.点击最下方`Import code`，在`Your old repository’s clone URL`中填入:
+```
+https://github.com/cq-s/CQUPT_HealthyReport
+```
+然后点击`Begin import`，等待导入完成。
+
+---           
+![](png/3.png)
+
+---
+![](png/4.png)
+4.再次点击右上角的头像选择 `Your repositories`
+找到刚才导入的项目，填写`userinfo.json`文件即可(填写说明见方法二第三步),如需修改时间请按`云端部署警告`中的说明进行修改。
+
+---
+![](png/5.png)
+
+---
+![](png/6.png)
+#### 方式二(本地或服务器运行)
 > 建议 Python 版本 >= 3.6
 ---
 1.下载文件(或者直接下载)
@@ -41,16 +74,16 @@ pip3 install -r requirements.txt
 ```json
 [
 #第一个用户的信息
-{"username":"",
-"password":"",
-"email":"" },
+{"username":"",---7位统一认证码
+"password":"",---登录教务系统的密码
+"email":"" },---自己的邮箱地址，用于接收打卡完成通知，不需要可留空
 #第二个用户的信息
 {"username":"",
 "password":"",
 "email":""}
 ]
 
-注：需要几个用户就添加几个字典，最后一个字典后没有`,`
+注：需要几个用户就添加几个字典，最后一个用户信息后没有`,`
 ```
 
 4.直接运行
@@ -60,5 +93,4 @@ python3 report.py
 ```
 ---
 
-#### 方式二(使用Github Actions)
-1.
+
