@@ -61,8 +61,6 @@ https://github.com/cq-s/CQUPT_HealthyReport
 1.下载文件(或者直接下载)
 ```
 git clone https://github.com/cq-s/CQUPT_HealthyReport.git
-cd NUIST_HealthyReport_NEW
-pip3 install -r requirements.txt
 ```
 ---
 2.安装依赖
