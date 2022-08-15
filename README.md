@@ -43,18 +43,18 @@ https://github.com/cq-s/CQUPT_HealthyReport
 然后点击`Begin import`，等待导入完成。
 
 ---           
-![](png/3.png)
+![avatar](png/3.png)
 
 ---
-![](png/4.png)
+![avatar](png/4.png)
 4.再次点击右上角的头像选择 `Your repositories`
 找到刚才导入的项目，填写`userinfo.json`文件即可(填写说明见方法二第三步),如需修改时间请按`云端部署警告`中的说明进行修改。
 
 ---
-![](png/5.png)
+![avatar](png/5.png)
 
 ---
-![](png/6.png)
+![avatar](png/6.png)
 #### 方式二(本地或服务器运行)
 > 建议 Python 版本 >= 3.6
 ---
