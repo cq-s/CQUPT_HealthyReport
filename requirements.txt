@@ -1,11 +1,3 @@
 beautifulsoup4
-numpy
-opencv_python
-Pillow
 pycryptodome
-PyYAML
 requests
-tensorflow
-lxml
-
-
