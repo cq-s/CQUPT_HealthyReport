@@ -47,6 +47,8 @@ https://github.com/cq-s/CQUPT_HealthyReport
 
 ---
 ![avatar](png/2.png)
+
+---
 6.再次点击右上角的头像选择 `Your repositories`
 找到刚才导入的项目，填写`userinfo.json`文件即可(填写说明见方法二第三步),如需修改时间请按`云端部署警告`中的说明进行修改。
 
