@@ -26,26 +26,24 @@
 #### 方式一
 > (使用Github Actions)
 ---
-1.登录自己的GitHub账号后点击右上角的`Star`,然后点击右上角的头像选择 `Your repositories`
+1.登录自己的GitHub账号后点击右上角的`Star`
 
 ---
 ![avatar](png/1.png)
 
 ---
-2.在打开的`Repositories`页面点击`NEW`,然后在`Repository name`中填写`sign`(可随意填写)，下方选择`Private`然后点击最下方的`Create repository`
+2.创建新仓库[点击创建自己的仓库](https://github.com/new/import)
 
 ---
-![avatar](png/2.png)
-
----
-3.点击最下方`Import code`，在`Your old repository’s clone URL`中填入:
+3.在`Your old repository’s clone URL`处填入
 ```
 https://github.com/cq-s/CQUPT_HealthyReport
 ```
-然后点击`Begin import`，等待导入完成。
+---
+4.然后在`Repository name`处填写仓库名,随便填，例如`sign`，选择`Private`
 
----           
-![avatar](png/3.png)
+---
+5.最后点击最下方的`Begin import`，等待导入完成。
 
 ---
 ![avatar](png/4.png)
