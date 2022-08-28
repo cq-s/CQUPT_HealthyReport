@@ -22,18 +22,4 @@ jobs:
         run: |
           python report.py
 
-#需要验证码时请分别剪切第26，39行的内容至第11，24行
-'''
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements-ocr.txt ]; then pip install -r requirements.txt; fi
-      - name: Run script
-        run: |
-          python report-ocr.py
-'''
+
