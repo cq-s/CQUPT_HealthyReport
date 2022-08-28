@@ -1,6 +1,6 @@
 # CQUPT_HealthyReport
 
-统一认证平台在更新中添加了验证码，利用 muggle_ocr 解决了统一认证所需验证码，可正常登陆填报。
+统一认证平台在更新中添加了验证码，利用 muggle_ocr 解决了统一认证所需验证码，可正常登陆填报(目前平台已不再需要验证码，当使用Github Actions 云端运行且需要验证码时可前往：.github/workflows-main.yml按照第25行的提示进行修改)。
 
 ### 特别提醒
 
@@ -14,7 +14,9 @@
 
 如果你需要将项目部署至 Github Actions 云端运行，请务必将仓库属性设置为**私有**!否则你的统一认证账号可能泄露。
 
-由于相关库过多造成依赖文件大于云函数所允许的最大值目前可能无法使用。
+由于相关库过多造成依赖文件大于云函数所允许的最大值目前可能无法使用(需要验证码时)。
+
+当不需要验证码进行验证登录时将`report.py`中的内容替换到云函数的`index.py`,同时填写`userinfo.json`上传并安装`requirements.txt`中的依赖即可
 
 默认执行时间设置在北京时间7:00（GitHub使用UTC时间，应为23:00），则设置corn触发的表达式为: `00 23 * * *`  如需修改可前往：.github/workflows-main.yml-schedule修改corn表达式
 
@@ -55,7 +57,7 @@ https://github.com/cq-s/CQUPT_HealthyReport
 
 ---
 ![avatar](png/6.png)
-#### 方式二(本地或服务器运行)
+#### 方式二(本地或服务器运行,配合定时计划使用)
 > 建议 Python 版本 >= 3.6
 ---
 1.下载文件(或者直接下载)
@@ -67,6 +69,10 @@ git clone https://github.com/cq-s/CQUPT_HealthyReport.git
 ```
 pip3 install -r requirements.txt
 ```
+ (当需要验证识别时请使用)
+ ```
+ pip3 install -r requirements-ocr.txt
+ ```
 ---
 3.填写`userinfo.json`文件
 ```json
@@ -89,6 +95,10 @@ pip3 install -r requirements.txt
 ```
 python3 report.py
 ```
+(当需要验证识别时请使用)
+ ```
+  python report-ocr.py
+ ```
 ---
 
 
