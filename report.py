@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-from __future__ import print_function
-from unittest import result
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta, timezone
@@ -8,9 +5,9 @@ import sys,json
 import base64
 import random,time
 from Crypto.Cipher import AES
-import muggle_ocr
 import traceback
 
+NeedCaptcha=False
 def push(Text,email):
     if email !='':
         url=url='https://prod-168.westus.logic.azure.com:443/workflows/363a7520f4ed4aa49b66d671d557d05c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=IifAnYntQOWrsMgoRbi4f8uqzProrcU9E91xzjg42AM'
@@ -68,35 +65,41 @@ class Work():
     
     def login(self):
         url="https://ids.cqupt.edu.cn/authserver/login?service=http://ehall.cqupt.edu.cn/publicapp/sys/cyxsjkdkmobile/*default/index.html"
-        html=self.session.get(url=url,allow_redirects=False);Timestamp=int(time.time()*1000)
-        soup = BeautifulSoup(html.text,'lxml')
+        try:
+            html=self.session.get(url=url,timeout=3)
+        except:
+            Utils.log('无法连接到学校服务器')
+            return None 
+        Timestamp=int(time.time()*1000); soup = BeautifulSoup(html.text,'lxml')
         salt = soup.select("#pwdEncryptSalt");salt = salt[0].get('value')
         form = soup.select('input');params={}
-        for item in form:
+        for item in form:  
             if None != item.get('name') and len(item.get('name')) > 0:
                 if item.get('name') != 'rememberMe':
                     if None == item.get('value'):
                         params[item.get('name')] = ''
                     else:
-                        params[item.get('name')] = item.get('value')
+                        params[item.get('name')] = item.get('value')             
         params['username']=self.username
         params['password']=Utils.encryptAES(Utils.randString(64) + self.password, salt)
-        Captcha =self.session.get(url=f'https://ids.cqupt.edu.cn/authserver/getCaptcha.htl?{Timestamp}')
-        sdk = muggle_ocr.SDK(model_type = muggle_ocr.ModelType.Captcha)
-        params['captcha'] =sdk.predict(image_bytes = Captcha.content)
+        '''NeedCaptcha=self.session.get(url=f"https://ids.cqupt.edu.cn/authserver/checkNeedCaptcha.htl?username={self.username}&_={Timestamp}").json()['isNeed']
+        if NeedCaptcha:
+            import muggle_ocr
+            Captcha =self.session.get(url=f'https://ids.cqupt.edu.cn/authserver/getCaptcha.htl?{Timestamp}')
+            sdk = muggle_ocr.SDK(model_type = muggle_ocr.ModelType.Captcha)
+            params['captcha'] =sdk.predict(image_bytes = Captcha.content)'''
         try:
-            res=self.session.post(url=url,params=params,allow_redirects=False)
+            res=self.session.post(url=url,params=params,allow_redirects=False,timeout=3)
             if res.status_code ==302:
                 self.session.get(res.headers['Location']);self.session.get(url='http://ehall.cqupt.edu.cn/publicapp/sys/cyxsjkdk/getUserId.do')
                 self.session.get(url='http://ehall.cqupt.edu.cn/publicapp/sys/funauthapp/api/getAppConfig/cyxsjkdkmobile-6578524306216816.do?GNFW=MOBILE')
                 Utils.log(f"账号{self.username}登录成功");return True
         except Exception as e:
             print(f'错误日志如下：\n[{e}]\n{traceback.format_exc()}')
-        Utils.log('账号登录失败')
-        return None  
+            Utils.log('账号登录失败')
+            return None  
         
     def sign(self):
-        #self.session.get(url='http://ehall.cqupt.edu.cn/publicapp/sys/cyxsjkdk/modules/yddjk/T_XSJKDK_XSTBXX_QUERY.do').json()
         Info=self.session.get(url='http://ehall.cqupt.edu.cn/publicapp/sys/cyxsjkdk/modules/yddjk/T_XSJKDK_XSTBXX_QUERY.do').json()['datas']['T_XSJKDK_XSTBXX_QUERY']['rows']
         Info=sorted(Info,key=lambda keys: keys['RQ'],reverse=True);form=None
         if Info[0]['SFDK']=='是':
@@ -126,8 +129,24 @@ class Work():
             except:
                 continue        
         push(Utils.logs,self.email)
+def main():
+    try:
+        with open("userinfo.json", "r") as f:
+            userinfo= json.load(f)
+            for user in userinfo:
+                if user['username'] and user['password']:
+                    wk=Work(user);wk.work()
+                else:
+                    print("请前往userinfo.json文件中配置用户信息")
+                Utils.logs=''
+        f.close()        
+    except:
+        print("请确保userinfo.json文件与当前文件在同一路径")
 
-with open("userinfo.json", "r") as f:
-    userinfo= json.load(f)
-    for user in userinfo:
-        wk=Work(user);wk.work()
+if __name__ == "__main__":
+    main()
+    
+
+      
+def handler(event, context):
+    main()
